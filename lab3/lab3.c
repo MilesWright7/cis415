@@ -73,6 +73,7 @@ void lfcat(){
 	char *pwd = (char *)malloc(sizeof(char) * 1024);
 	ssize_t line_size = 0;
 	size_t buff_size = 1024;
+	int file_cnt = 1;
 	DIR *dir;
 	struct dirent *dp;
 
@@ -84,12 +85,15 @@ void lfcat(){
 					strcmp(dp->d_name, "lab3.c") && strcmp(dp->d_name, "a.out")) {
 				
 				in_file = fopen(dp->d_name, "r");
+				fprintf(out_file, "File %d: %s\n", file_cnt, dp->d_name);
 				line_size = getline(&buff, &buff_size, in_file);
 				while(line_size >= 0) {
 					fprintf(out_file, "%s\n", buff);
 					line_size = getline(&buff, &buff_size, in_file);
 				}
 				fclose(in_file);
+				fprintf(out_file, "------------------------------------------------------------------------------------------");
+				file_cnt++;
 			}
 			
 			else {
